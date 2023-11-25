@@ -1,0 +1,4 @@
+- hosts: all
+  tasks:
+  - shell: "mv /var/log/*.log /tmp/"
+    ignore_errors: true

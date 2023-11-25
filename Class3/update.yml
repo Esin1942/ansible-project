@@ -1,0 +1,30 @@
+- hosts: centos
+  tasks:
+  - name: Update kernel
+    yum:
+      name: kernel
+      state: latest
+    register: kernel_status
+
+  - name: Disable SELinux
+    selinux:
+      state: disabled
+    register: selinux_status
+
+  - debug:
+      msg: "{{ kernel_status }}"
+
+  - debug:
+      msg: "{{ selinux_status }}"
+
+  - reboot:
+    when: ( kernel_status.changed or selinux_status.changed )
+
+  - name: Wait for SSH to be accessible
+    wait_for:
+      port: 22
+      delay: 10
+
+  - yum:
+      name: unzip
+      state: latest

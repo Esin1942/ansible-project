@@ -1,0 +1,10 @@
+- hosts: all
+  tasks:
+  - yum:
+      name: "{{ item }}"
+      state: latest
+    # Loop
+    with_items:
+      - bind-utils
+      - net-tools
+      - unzip

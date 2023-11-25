@@ -1,0 +1,6 @@
+- hosts: centos
+  vars:
+    package: "net-tools"
+  tasks:
+  - yum:
+    name: "{{ package }}"

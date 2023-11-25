@@ -1,0 +1,22 @@
+- hosts: centos
+  handlers:
+  - name: Restart chronyd
+    systemd:
+      name: chronyd
+      state: restarted
+
+  tasks:
+  - name: Update  chrony.conf
+    lineinfile:
+      path: /etc/chrony.conf 
+      regexp: '^server*iburst$'
+      line: 'server ntp.google.com iburst'
+    notify: Restart chronyd
+
+  - name: Clean up chrony.conf 
+    lineinfile:
+      path: /etc/chrony.conf 
+      state: absent
+      regexp: '^server [0,1,2,3].*iburst$'
+    notify: Restart chronyd
+  

@@ -1,0 +1,6 @@
+- hosts: centos
+  vars:
+    username: "John"
+  tasks:
+  - debug: 
+      msg: "Hello {{ username }}"
